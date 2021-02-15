@@ -9,11 +9,17 @@ function AutoLabelEmails() {
     // "John Smith" <jsmith@gmail.com>
     const from_full = thread.getMessages()[0].getFrom();
     // John Smith
-    const from_name = from_full.replace(/^(.+)<([^>]+)>$/, '$1').replace(/"/g, '');
+    const from_name = from_full.replace(/^(.+)<([^>]+)>$/, '$1')
+      .replace(/"/g, '')
+      .replace(/'/g, '')
+      .trim();
     // jsmith@gmail.com
     const from_addr = from_full.replace(/^(.+)<([^>]+)>$/, '$2');
-
-    thread.addLabel(GmailApp.createLabel('sender/' + from_name));
-    thread.removeLabel(GmailApp.getUserLabelByName(UNPROCESSED));
+    const label_str = 'sender/' + from_name  // Or from_addr.
+  
+    const label = GmailApp.createLabel(label_str);    
+    Logger.log('Applying label: ' + label.getName());
+    thread.addLabel(label);
+    thread.removeLabel(labels[UNPROCESSED]);
   });
 }
