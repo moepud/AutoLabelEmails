@@ -13,7 +13,7 @@ function AutoLabelEmails() {
     // jsmith@gmail.com
     const from_addr = from_full.replace(/^(.+)<([^>]+)>$/, '$2');
 
-    thread.addLabel(GmailApp.createLabel('sender/' + from_addr));
+    thread.addLabel(GmailApp.createLabel('sender/' + from_name));
     thread.removeLabel(GmailApp.getUserLabelByName(UNPROCESSED));
   });
 }
