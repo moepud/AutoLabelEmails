@@ -4,6 +4,7 @@ const UNPROCESSED = '_unprocessed'
 function AutoLabelEmails() {
   const query = Utilities.formatString('label:' + UNPROCESSED);
   const threads = GmailApp.search(query, 0, MAX_SEARCH_RESULTS);
+  const unprocessed_label = GmailApp.getUserLabelByName(UNPROCESSED);
 
   threads.forEach(function(thread) {
     // "John Smith" <jsmith@gmail.com>
@@ -20,6 +21,6 @@ function AutoLabelEmails() {
     const label = GmailApp.createLabel(label_str);    
     Logger.log('Applying label: ' + label.getName());
     thread.addLabel(label);
-    thread.removeLabel(labels[UNPROCESSED]);
+    thread.removeLabel(unprocessed_label);
   });
 }
